@@ -1,35 +1,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>DDBM App</title>
+    <title>DDBM - Welcome</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        .login-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            text-align: center;
+        }
+        .microsoft-btn {
+            background-color: #0078d4;
+            color: white;
+        }
+        .google-btn {
+            background-color: #4285f4;
+            color: white;
+        }
+        .microsoft-btn:hover {
+            background-color: #106ebe;
+        }
+        .google-btn:hover {
+            background-color: #357abd;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+    </style>
 </head>
 <body>
-    <div id="auth-section">
-        <div id="login-buttons">
-            <button onclick="window.location.href='/.auth/login/aad'">
-                Login with Microsoft
-            </button>
-            <button onclick="window.location.href='/.auth/login/google'">
-                Login with Google
-            </button>
-        </div>
-        <button id="logout-btn" onclick="window.location.href='/.auth/logout'" style="display:none;">
-            Logout
-        </button>
-        <div id="user-info"></div>
+    <div class="login-container">
+        <h1>Welcome to DDBM</h1>
+        <p>Please sign in to continue</p>
+        
+        <a href="/login" class="login-button microsoft-btn">
+            Login with Microsoft
+        </a>
+        
+        <a href="/.auth/login/google" class="login-button google-btn">
+            Login with Google
+        </a>
     </div>
 
-    <script src="auth.js"></script>
     <script>
-        // Show appropriate buttons based on auth status
-        checkAuth().then(user => {
-            if (user) {
-                document.getElementById('login-buttons').style.display = 'none';
-                document.getElementById('logout-btn').style.display = 'block';
-                document.getElementById('user-info').innerHTML = 
-                    `Welcome, ${user.userDetails}!`;
+        // Check if user is already authenticated
+        async function checkAuth() {
+            try {
+                const response = await fetch('/.auth/me');
+                const payload = await response.json();
+                const { clientPrincipal } = payload;
+                
+                if (clientPrincipal) {
+                    // User is already logged in, redirect to dashboard or main app
+                    window.location.href = '/dashboard';
+                }
+            } catch (error) {
+                console.error('Auth check failed:', error);
             }
-        });
+        }
+
+        // Check authentication on page load
+        checkAuth();
     </script>
 </body>
-</html> 
+</html>
