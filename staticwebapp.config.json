@@ -3,7 +3,7 @@
     "identityProviders": {
       "azureActiveDirectory": {
         "registration": {
-          "openIdIssuer": "https://login.microsoftonline.com/96e7dd96-48b5-4991-a67e-1563013dfbe2/v2.0",
+          "openIdIssuer": "https://zimaxai.b2clogin.com/zimaxai.onmicrosoft.com/oauth2/v2.0/authorize?p=signupsignin1",
           "clientIdSettingName": "AZURE_CLIENT_ID",
           "clientSecretSettingName": "AZURE_CLIENT_SECRET"
         }
