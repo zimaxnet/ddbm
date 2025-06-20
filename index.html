@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DDBM App</title>
+</head>
+<body>
+    <div id="auth-section">
+        <button id="login-btn" onclick="window.location.href='/.auth/login/aad'">
+            Login with Azure AD
+        </button>
+        <button id="logout-btn" onclick="window.location.href='/.auth/logout'" style="display:none;">
+            Logout
+        </button>
+        <div id="user-info"></div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        // Show appropriate buttons based on auth status
+        checkAuth().then(user => {
+            if (user) {
+                document.getElementById('login-btn').style.display = 'none';
+                document.getElementById('logout-btn').style.display = 'block';
+                document.getElementById('user-info').innerHTML = 
+                    `Welcome, ${user.userDetails}!`;
+            }
+        });
+    </script>
+</body>
+</html> 
