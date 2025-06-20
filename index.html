@@ -5,9 +5,14 @@
 </head>
 <body>
     <div id="auth-section">
-        <button id="login-btn" onclick="window.location.href='/.auth/login/aad'">
-            Login with Microsoft Entra
-        </button>
+        <div id="login-buttons">
+            <button onclick="window.location.href='/.auth/login/aad'">
+                Login with Microsoft
+            </button>
+            <button onclick="window.location.href='/.auth/login/google'">
+                Login with Google
+            </button>
+        </div>
         <button id="logout-btn" onclick="window.location.href='/.auth/logout'" style="display:none;">
             Logout
         </button>
@@ -19,7 +24,7 @@
         // Show appropriate buttons based on auth status
         checkAuth().then(user => {
             if (user) {
-                document.getElementById('login-btn').style.display = 'none';
+                document.getElementById('login-buttons').style.display = 'none';
                 document.getElementById('logout-btn').style.display = 'block';
                 document.getElementById('user-info').innerHTML = 
                     `Welcome, ${user.userDetails}!`;

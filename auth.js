@@ -11,8 +11,7 @@ async function checkAuth() {
       return clientPrincipal;
     } else {
       console.log('User is not authenticated');
-      // Redirect to Microsoft Entra login
-      window.location.href = '/.auth/login/aad';
+      // Do not redirect, let the user choose a login provider.
       return null;
     }
   } catch (error) {
