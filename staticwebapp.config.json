@@ -23,11 +23,5 @@
       "route": "/admin/*",
       "allowedRoles": ["authenticated"]
     }
-  ],
-  "responseOverrides": {
-    "401": {
-      "redirect": "/login",
-      "statusCode": 302
-    }
-  }
+  ]
 }

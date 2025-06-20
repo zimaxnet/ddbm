@@ -11,8 +11,8 @@ async function checkAuth() {
       return clientPrincipal;
     } else {
       console.log('User is not authenticated');
-      // Redirect to login
-      window.location.href = '/.auth/login/aad';
+      // Redirect to B2C login
+      window.location.href = 'https://zimaxai.b2clogin.com/zimaxai.onmicrosoft.com/oauth2/v2.0/authorize?p=signupsignin1&client_id=806c6f27-96c8-452e-875d-54489819b402&redirect_uri=https://ddbm.us&response_type=code&scope=openid';
       return null;
     }
   } catch (error) {
