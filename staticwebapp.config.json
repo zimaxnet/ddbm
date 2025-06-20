@@ -12,12 +12,8 @@
   },
   "routes": [
     {
-      "route": "/login",
-      "rewrite": "/.auth/login/aad"
-    },
-    {
-      "route": "/logout",
-      "rewrite": "/.auth/logout"
+      "route": "/",
+      "allowedRoles": ["anonymous", "authenticated"]
     },
     {
       "route": "/api/*",
@@ -25,7 +21,7 @@
     },
     {
       "route": "/admin/*",
-      "allowedRoles": ["admin"]
+      "allowedRoles": ["authenticated"]
     }
   ],
   "responseOverrides": {
@@ -33,10 +29,5 @@
       "redirect": "/login",
       "statusCode": 302
     }
-  },
-  "globalHeaders": {
-    "X-Content-Type-Options": "nosniff",
-    "X-Frame-Options": "DENY",
-    "Content-Security-Policy": "default-src 'self' https://login.microsoftonline.com"
   }
 }
