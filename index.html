@@ -41,15 +41,54 @@
             background-color: #4285f4;
             color: white;
         }
+        .email-btn {
+            background-color: #34a853;
+            color: white;
+        }
         .microsoft-btn:hover {
             background-color: #106ebe;
         }
         .google-btn:hover {
             background-color: #357abd;
         }
+        .email-btn:hover {
+            background-color: #2d8a47;
+        }
         h1 {
             color: #333;
             margin-bottom: 30px;
+        }
+        .divider {
+            margin: 20px 0;
+            color: #666;
+            font-size: 14px;
+        }
+        .email-form {
+            display: none;
+            margin-top: 20px;
+        }
+        .email-input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .email-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: #34a853;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .email-submit:hover {
+            background-color: #2d8a47;
         }
     </style>
 </head>
@@ -58,13 +97,24 @@
         <h1>Welcome to DDBM</h1>
         <p>Please sign in to continue</p>
         
-        <a href="/login" class="login-button microsoft-btn">
+        <a href="/.auth/login/aad" class="login-button microsoft-btn">
             Login with Microsoft
         </a>
         
         <a href="/.auth/login/google" class="login-button google-btn">
             Login with Google
         </a>
+        
+        <div class="divider">or</div>
+        
+        <button onclick="showEmailForm()" class="login-button email-btn">
+            Login with Email
+        </button>
+        
+        <div id="email-form" class="email-form">
+            <input type="email" id="email-input" class="email-input" placeholder="Enter your email address" required>
+            <button onclick="loginWithEmail()" class="email-submit">Continue with Email</button>
+        </div>
     </div>
 
     <script>
@@ -83,6 +133,33 @@
                 console.error('Auth check failed:', error);
             }
         }
+
+        // Show email form
+        function showEmailForm() {
+            document.getElementById('email-form').style.display = 'block';
+            document.getElementById('email-input').focus();
+        }
+
+        // Handle email login
+        function loginWithEmail() {
+            const email = document.getElementById('email-input').value;
+            if (!email || !email.includes('@')) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            // For now, redirect to Microsoft login (you can customize this)
+            window.location.href = '/.auth/login/aad';
+        }
+
+        // Handle Enter key in email input
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('email-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    loginWithEmail();
+                }
+            });
+        });
 
         // Check authentication on page load
         checkAuth();
