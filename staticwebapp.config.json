@@ -6,18 +6,13 @@
           "openIdIssuer": "https://zimaxai.ciamlogin.com/zimaxai.onmicrosoft.com/v2.0",
           "clientIdSettingName": "AZURE_CLIENT_ID",
           "clientSecretSettingName": "AZURE_CLIENT_SECRET"
-        },
-        "userDetailsClaim": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
+        }
       }
     }
   },
   "routes": [
     {
       "route": "/dashboard",
-      "allowedRoles": ["authenticated"]
-    },
-    {
-      "route": "/dashboard/*",
       "allowedRoles": ["authenticated"]
     }
   ]
