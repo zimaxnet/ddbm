@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDBM Dashboard</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .dashboard {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .success {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .user-info {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .logout-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="success">
+            <h1>🎉 SUCCESS!</h1>
+            <h2>External ID Authentication Working!</h2>
+            <p>You've successfully implemented email signup + Google + Microsoft login</p>
+        </div>
+        
+        <div class="user-info">
+            <h3>User Information</h3>
+            <div id="user-details">Loading...</div>
+            <a href="/.auth/logout" class="logout-btn">Sign Out</a>
+        </div>
+    </div>
+
+    <script>
+        async function loadUserInfo() {
+            try {
+                const response = await fetch('/.auth/me');
+                const payload = await response.json();
+                const { clientPrincipal } = payload;
+                
+                if (clientPrincipal) {
+                    document.getElementById('user-details').innerHTML = `
+                        <p><strong>Name:</strong> ${clientPrincipal.userDetails || 'Not provided'}</p>
+                        <p><strong>Provider:</strong> ${clientPrincipal.identityProvider}</p>
+                        <p><strong>User ID:</strong> ${clientPrincipal.userId}</p>
+                        <p><strong>Roles:</strong> ${clientPrincipal.userRoles.join(', ')}</p>
+                    `;
+                } else {
+                    window.location.href = '/';
+                }
+            } catch (error) {
+                document.getElementById('user-details').innerHTML = 
+                    '<p>Failed to load user information</p>';
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', loadUserInfo);
+    </script>
+</body>
+</html> 
