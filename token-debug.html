@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Token Debug</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1a1a1a; color: #00ff00; }
+        pre { background: #2a2a2a; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        .error { color: #ff6666; }
+        .success { color: #66ff66; }
+        button { padding: 10px 20px; margin: 10px; background: #333; color: white; border: 1px solid #666; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Token Debug Tool</h1>
+    
+    <button onclick="testLogin()">Test Login Flow</button>
+    <button onclick="checkAuth()">Check Current Auth</button>
+    
+    <h2>Authentication Data:</h2>
+    <div id="authData">Not checked yet</div>
+    
+    <h2>Login Test:</h2>
+    <div id="loginTest">Click "Test Login Flow" to start</div>
+    
+    <script>
+        async function checkAuth() {
+            try {
+                const response = await fetch('/.auth/me');
+                const data = await response.json();
+                document.getElementById('authData').innerHTML = 
+                    '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            } catch (error) {
+                document.getElementById('authData').innerHTML = 
+                    '<span class="error">Error: ' + error.message + '</span>';
+            }
+        }
+        
+        function testLogin() {
+            document.getElementById('loginTest').innerHTML = 
+                '<span class="success">Redirecting to login...</span>';
+            
+            // Try to login and then redirect back here
+            window.location.href = '/.auth/login/aad?post_login_redirect_uri=' + 
+                encodeURIComponent(window.location.href);
+        }
+        
+        // Auto-check auth on page load
+        checkAuth();
+    </script>
+</body>
+</html> 
