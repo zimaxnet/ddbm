@@ -1,168 +1,380 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>DDBM - Welcome</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDBM - Sign In</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        * {
             margin: 0;
-            background-color: #f5f5f5;
-        }
-        .login-container {
-            background: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 100%;
-        }
-        .login-button {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            text-decoration: none;
-            text-align: center;
-        }
-        .microsoft-btn {
-            background-color: #0078d4;
-            color: white;
-        }
-        .google-btn {
-            background-color: #4285f4;
-            color: white;
-        }
-        .email-btn {
-            background-color: #34a853;
-            color: white;
-        }
-        .microsoft-btn:hover {
-            background-color: #106ebe;
-        }
-        .google-btn:hover {
-            background-color: #357abd;
-        }
-        .email-btn:hover {
-            background-color: #2d8a47;
-        }
-        h1 {
-            color: #333;
-            margin-bottom: 30px;
-        }
-        .divider {
-            margin: 20px 0;
-            color: #666;
-            font-size: 14px;
-        }
-        .email-form {
-            display: none;
-            margin-top: 20px;
-        }
-        .email-input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
+            padding: 0;
             box-sizing: border-box;
         }
-        .email-submit {
-            width: 100%;
-            padding: 12px;
-            background-color: #34a853;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
         }
-        .email-submit:hover {
-            background-color: #2d8a47;
+        
+        /* Animated background dots */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .dot {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.3; }
+        }
+        
+        .container {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        .logo-section {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .logo {
+            font-size: 3rem;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .tagline {
+            color: #888;
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+        
+        .auth-section {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .auth-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ffffff;
+        }
+        
+        .login-options {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .login-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 14px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+        
+        .login-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .login-btn.primary {
+            background: rgba(66, 133, 244, 0.1);
+            border-color: rgba(66, 133, 244, 0.3);
+        }
+        
+        .login-btn.primary:hover {
+            background: rgba(66, 133, 244, 0.2);
+            border-color: rgba(66, 133, 244, 0.5);
+        }
+        
+        .icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+        
+        .status-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+        }
+        
+        .status-indicator.show {
+            display: block;
+        }
+        
+        .status-indicator.success {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+        
+        .status-indicator.error {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        
+        .debug-info {
+            margin-top: 20px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        
+        .debug-info summary {
+            cursor: pointer;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        
+        .debug-info code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .auth-section {
+                padding: 30px 24px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h1>Welcome to DDBM</h1>
-        <p>Please sign in to continue</p>
+    <div class="bg-animation" id="bgAnimation"></div>
+    
+    <div class="status-indicator" id="statusIndicator"></div>
+    
+    <div class="container">
+        <div class="logo-section">
+            <div class="logo">ddbm</div>
+            <div class="tagline">Your intelligent data platform</div>
+        </div>
         
-        <a href="/.auth/login/aad" class="login-button microsoft-btn">
-            Login with Microsoft
-        </a>
-        
-        <a href="/.auth/login/google" class="login-button google-btn">
-            Login with Google
-        </a>
-        
-        <div class="divider">or</div>
-        
-        <button onclick="showEmailForm()" class="login-button email-btn">
-            Login with Email
-        </button>
-        
-        <div id="email-form" class="email-form">
-            <input type="email" id="email-input" class="email-input" placeholder="Enter your email address" required>
-            <button onclick="loginWithEmail()" class="email-submit">Continue with Email</button>
+        <div class="auth-section">
+            <h2 class="auth-title">Sign in or create an account</h2>
+            
+            <div class="login-options">
+                <!-- Single login button that goes to External ID -->
+                <a href="/.auth/login/aad" class="login-btn primary" id="mainLogin">
+                    <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 9 5.16.74 9-3.45 9-9V7l-10-5z" fill="#00BCF2"/>
+                        <path d="M12 2v20c5.16.74 9-3.45 9-9V7l-9-5z" fill="#0078D4"/>
+                        <path d="M12 7l-2 3h4l-2-3z" fill="white"/>
+                        <path d="M10 10l2 3 2-3h-4z" fill="white"/>
+                        <path d="M12 13l-2 3h4l-2-3z" fill="white"/>
+                    </svg>
+                    Continue to Sign In
+                </a>
+                
+                <!-- Alternative direct test buttons -->
+                <button onclick="testDirectAuth()" class="login-btn">
+                    <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.58L19 8l-9 9z"/>
+                    </svg>
+                    Test Direct Authentication
+                </button>
+            </div>
+            
+            <div class="debug-info">
+                <details>
+                    <summary>Debug Information</summary>
+                    <p>Main login URL: <code>/.auth/login/aad</code></p>
+                    <p>Expected: Redirect to External ID with email + Google options</p>
+                    <p>Current endpoint: <code id="currentEndpoint">Loading...</code></p>
+                    <p>Auth status: <code id="authStatus">Checking...</code></p>
+                </details>
+            </div>
         </div>
     </div>
-
+    
     <script>
-        // Check if user is already authenticated
-        async function checkAuth() {
+        // Create animated background dots
+        function createBackgroundAnimation() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            const numDots = 50;
+            
+            for (let i = 0; i < numDots; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                dot.style.left = Math.random() * 100 + '%';
+                dot.style.top = Math.random() * 100 + '%';
+                dot.style.animationDelay = Math.random() * 6 + 's';
+                dot.style.animationDuration = (3 + Math.random() * 6) + 's';
+                bgAnimation.appendChild(dot);
+            }
+        }
+        
+        // Check authentication status
+        async function checkAuthStatus() {
             try {
                 const response = await fetch('/.auth/me');
-                const payload = await response.json();
-                const { clientPrincipal } = payload;
+                const data = await response.json();
                 
-                if (clientPrincipal) {
-                    // User is already logged in, redirect to dashboard or main app
-                    window.location.href = '/dashboard';
+                document.getElementById('authStatus').textContent = 
+                    data.clientPrincipal ? 'Authenticated' : 'Not authenticated';
+                
+                if (data.clientPrincipal) {
+                    showStatus('Already logged in! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/dashboard';
+                    }, 1500);
+                    return true;
                 }
+                return false;
             } catch (error) {
-                console.error('Auth check failed:', error);
+                document.getElementById('authStatus').textContent = 'Error checking auth';
+                console.log('Auth check failed:', error);
+                return false;
             }
         }
-
-        // Show email form
-        function showEmailForm() {
-            document.getElementById('email-form').style.display = 'block';
-            document.getElementById('email-input').focus();
-        }
-
-        // Handle email login
-        function loginWithEmail() {
-            const email = document.getElementById('email-input').value;
-            if (!email || !email.includes('@')) {
-                alert('Please enter a valid email address');
-                return;
+        
+        // Show current configuration
+        async function showCurrentConfig() {
+            try {
+                // Try to determine the current endpoint configuration
+                const testUrls = [
+                    'https://zimaxai.ciamlogin.com/zimaxai.onmicrosoft.com/signupsignin1/.well-known/openid_configuration',
+                    'https://zimaxai.b2clogin.com/zimaxai.onmicrosoft.com/signupsignin1/v2.0/.well-known/openid_configuration',
+                    'https://login.microsoftonline.com/96e7dd96-48b5-4991-a67e-1563013dfbe2/v2.0/.well-known/openid_configuration'
+                ];
+                
+                document.getElementById('currentEndpoint').textContent = 'Testing endpoints...';
+                
+                // Test which endpoint is working
+                for (const url of testUrls) {
+                    try {
+                        const response = await fetch(url, { mode: 'no-cors' });
+                        if (response.ok || response.type === 'opaque') {
+                            document.getElementById('currentEndpoint').textContent = url.split('/.well-known')[0];
+                            break;
+                        }
+                    } catch (e) {
+                        continue;
+                    }
+                }
+                
+            } catch (error) {
+                document.getElementById('currentEndpoint').textContent = 'Unable to determine';
             }
+        }
+        
+        // Test direct authentication
+        async function testDirectAuth() {
+            showStatus('Testing authentication endpoint...', 'info');
             
-            // For now, redirect to Microsoft login (you can customize this)
+            // Try the direct URL that should work
             window.location.href = '/.auth/login/aad';
         }
-
-        // Handle Enter key in email input
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('email-input').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    loginWithEmail();
-                }
-            });
+        
+        // Show status message
+        function showStatus(message, type = 'info') {
+            const indicator = document.getElementById('statusIndicator');
+            indicator.textContent = message;
+            indicator.className = `status-indicator show ${type}`;
+            
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Handle main login click
+        document.getElementById('mainLogin').addEventListener('click', function(e) {
+            showStatus('Redirecting to sign in...', 'success');
         });
-
-        // Check authentication on page load
-        checkAuth();
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', async function() {
+            createBackgroundAnimation();
+            
+            // Check if already authenticated
+            const isAuthenticated = await checkAuthStatus();
+            if (!isAuthenticated) {
+                // Show config info
+                showCurrentConfig();
+            }
+        });
+        
+        // Add keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.target.classList.contains('login-btn')) {
+                e.target.click();
+            }
+        });
     </script>
 </body>
 </html>
