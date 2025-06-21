@@ -1,11 +1,22 @@
 {
   "auth": {
     "identityProviders": {
-      "azureActiveDirectory": {
-        "registration": {
-          "openIdIssuer": "https://zimaxai.ciamlogin.com/zimaxai.onmicrosoft.com/v2.0",
-          "clientIdSettingName": "AZURE_CLIENT_ID",
-          "clientSecretSettingName": "AZURE_CLIENT_SECRET"
+      "customOpenIdConnectProviders": {
+        "zimaxai": {
+          "registration": {
+            "clientIdSettingName": "AZURE_CLIENT_ID",
+            "clientCredential": {
+              "clientSecretSettingName": "AZURE_CLIENT_SECRET"
+            },
+            "openIdConnectConfiguration": {
+              "wellKnownOpenIdConfiguration": "https://zimaxai.ciamlogin.com/zimaxai.onmicrosoft.com/signupsignin1/v2.0/.well-known/openid-configuration"
+            }
+          },
+          "login": {
+            "nameClaimType": "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier",
+            "scopes": [],
+            "loginParameterNames": []
+          }
         }
       }
     }
