@@ -13,15 +13,11 @@
   },
   "routes": [
     {
-      "route": "/",
-      "allowedRoles": ["anonymous", "authenticated"]
-    },
-    {
-      "route": "/api/*",
+      "route": "/dashboard",
       "allowedRoles": ["authenticated"]
     },
     {
-      "route": "/admin/*",
+      "route": "/dashboard/*",
       "allowedRoles": ["authenticated"]
     }
   ]

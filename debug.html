@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Claims Debug</title>
+    <style>
+        body { 
+            font-family: monospace; 
+            padding: 20px; 
+            background: #1a1a1a; 
+            color: #00ff00; 
+        }
+        pre { 
+            background: #2a2a2a; 
+            padding: 15px; 
+            border-radius: 5px; 
+            border: 1px solid #444;
+            overflow-x: auto;
+        }
+        .error { color: #ff6666; }
+        .success { color: #66ff66; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Claims Debug Tool</h1>
+    <p>This will show exactly what Azure Static Web Apps is receiving:</p>
+    
+    <h2>Authentication Status:</h2>
+    <div id="status">Checking...</div>
+    
+    <h2>Full Claims Data:</h2>
+    <div id="claims">Loading...</div>
+    
+    <h2>Parsed User Info:</h2>
+    <div id="userInfo">Loading...</div>
+    
+    <script>
+        async function debugAuth() {
+            try {
+                const response = await fetch('/.auth/me');
+                const data = await response.json();
+                
+                // Show status
+                const statusDiv = document.getElementById('status');
+                if (data.clientPrincipal) {
+                    statusDiv.innerHTML = '<span class="success">✅ Authenticated</span>';
+                } else {
+                    statusDiv.innerHTML = '<span class="error">❌ Not authenticated</span>';
+                }
+                
+                // Show raw data
+                document.getElementById('claims').innerHTML = 
+                    '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                
+                // Parse user info
+                const userDiv = document.getElementById('userInfo');
+                if (data.clientPrincipal) {
+                    const user = data.clientPrincipal;
+                    userDiv.innerHTML = `
+                        <p><strong>User ID:</strong> ${user.userId || 'Missing'}</p>
+                        <p><strong>User Details:</strong> ${user.userDetails || 'Missing'}</p>
+                        <p><strong>Identity Provider:</strong> ${user.identityProvider || 'Missing'}</p>
+                        <p><strong>Roles:</strong> ${user.userRoles ? user.userRoles.join(', ') : 'Missing'}</p>
+                        <p><strong>Claims Count:</strong> ${user.claims ? user.claims.length : 0}</p>
+                    `;
+                    
+                    if (user.claims && user.claims.length > 0) {
+                        userDiv.innerHTML += '<h3>Individual Claims:</h3>';
+                        user.claims.forEach((claim, index) => {
+                            userDiv.innerHTML += `<p><strong>${claim.typ}:</strong> ${claim.val}</p>`;
+                        });
+                    }
+                } else {
+                    userDiv.innerHTML = '<p class="error">No user data available</p>';
+                }
+                
+            } catch (error) {
+                document.getElementById('status').innerHTML = 
+                    '<span class="error">❌ Error: ' + error.message + '</span>';
+                document.getElementById('claims').innerHTML = 
+                    '<p class="error">Failed to load: ' + error.message + '</p>';
+            }
+        }
+        
+        debugAuth();
+        
+        // Auto-refresh every 5 seconds
+        setInterval(debugAuth, 5000);
+    </script>
+</body>
+</html> 
