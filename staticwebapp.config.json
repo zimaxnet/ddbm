@@ -3,21 +3,11 @@
     "identityProviders": {
       "azureActiveDirectory": {
         "registration": {
-          "openIdIssuer": "https://zimaxai.ciamlogin.com/zimaxai.onmicrosoft.com/signupsignin1/v2.0",
+          "openIdIssuer": "https://zimaxai.ciamlogin.com/zimaxai.onmicrosoft.com/v2.0",
           "clientIdSettingName": "AZURE_CLIENT_ID",
           "clientSecretSettingName": "AZURE_CLIENT_SECRET"
         }
       }
     }
-  },
-  "routes": [
-    {
-      "route": "/login",
-      "rewrite": "/.auth/login/aad"
-    },
-    {
-      "route": "/logout",
-      "rewrite": "/.auth/logout"
-    }
-  ]
+  }
 }
