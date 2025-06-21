@@ -6,8 +6,23 @@
           "openIdIssuer": "https://zimaxai.ciamlogin.com/zimaxai.onmicrosoft.com/v2.0",
           "clientIdSettingName": "AZURE_CLIENT_ID",
           "clientSecretSettingName": "AZURE_CLIENT_SECRET"
-        }
+        },
+        "userDetailsClaim": "email"
       }
     }
-  }
+  },
+  "routes": [
+    {
+      "route": "/",
+      "allowedRoles": ["anonymous", "authenticated"]
+    },
+    {
+      "route": "/api/*",
+      "allowedRoles": ["authenticated"]
+    },
+    {
+      "route": "/admin/*",
+      "allowedRoles": ["authenticated"]
+    }
+  ]
 }
